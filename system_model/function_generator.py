@@ -48,8 +48,8 @@ m_0, n_0, k_0, h_0 = sf.symbols("m_0 n_0 k_0 h_0")
 
 
 def odo_error_func(X_i: sf.Matrix44, X_f: sf.Matrix44,
-                  Rot_odo: sf.Rot3.symbolic("Rot_odo").to_rotation_matrix(), t_odo: sf.V3.symbolic("t_odo"),
-                   s: sf.Symbol('s')) ->sf.V6:
+                  Rot_odo: sf.Matrix33, t_odo: sf.V3,
+                   s: sf.Symbol) ->sf.V6:
     T_odo = sf.Matrix44.eye()
     T_odo[:3, :3] = Rot_odo
     T_odo[:3, 3] = t_odo
@@ -68,8 +68,8 @@ residual_func_codegen = codegen.Codegen.function(func=odo_error_func, config=cod
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
 def odo_error_func_wrt_s(X_i: sf.Matrix44, X_f: sf.Matrix44,
-                        Rot_odo: sf.Rot3.symbolic("Rot_odo").to_rotation_matrix(), t_odo: sf.V3.symbolic("t_odo"),
-                   s: sf.Symbol('s')) ->sf.Matrix:
+                  Rot_odo: sf.Matrix33, t_odo: sf.V3,
+                   s: sf.Symbol) ->sf.Matrix:
     error = odo_error_func(X_i, X_f, Rot_odo, t_odo, s)
     error_wrt_s = error.diff(s)
     return error_wrt_s
@@ -77,8 +77,8 @@ residual_func_codegen = codegen.Codegen.function(func=odo_error_func_wrt_s, conf
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
 def odo_error_func_wrt_pos_i(X_i: sf.Matrix44, X_f: sf.Matrix44,
-                        Rot_odo: sf.Rot3.symbolic("Rot_odo").to_rotation_matrix(), t_odo: sf.V3.symbolic("t_odo"),
-                   s: sf.Symbol('s')) ->sf.Matrix:
+                  Rot_odo: sf.Matrix33, t_odo: sf.V3,
+                   s: sf.Symbol) ->sf.Matrix:
     error = odo_error_func(X_i, X_f, Rot_odo, t_odo, s)
     error_wrt_pos_i = error.jacobian(X_i)
     return error_wrt_pos_i
@@ -86,18 +86,18 @@ residual_func_codegen = codegen.Codegen.function(func=odo_error_func_wrt_pos_i, 
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
 def odo_error_func_wrt_pos_f(X_i: sf.Matrix44, X_f: sf.Matrix44,
-                        Rot_odo: sf.Rot3.symbolic("Rot_odo").to_rotation_matrix(), t_odo: sf.V3.symbolic("t_odo"),
-                   s: sf.Symbol('s')) ->sf.Matrix:
+                  Rot_odo: sf.Matrix33, t_odo: sf.V3,
+                   s: sf.Symbol) ->sf.Matrix:
     error = odo_error_func(X_i, X_f, Rot_odo, t_odo, s)
     error_wrt_pos_f = error.jacobian(X_f)
     return error_wrt_pos_f
 residual_func_codegen = codegen.Codegen.function(func=odo_error_func_wrt_pos_f, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     l_0 = sf.V3.symbolic("")
     l_0[0] = m_0 + n_0
@@ -127,21 +127,21 @@ def kin_error_func(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_a_1(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
-                   X_0: sf.Matrix44, X_f: sf.Matrix44) ->sf.Matrix:
+def kin_error_func_wrt_a_1(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
+                   X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.jacobian(a_1)
     return error
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_a_1, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_a_2(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_a_2(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.jacobian(a_2)
@@ -149,10 +149,10 @@ def kin_error_func_wrt_a_2(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_a_2, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_a_3(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_a_3(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.jacobian(a_3)
@@ -160,10 +160,10 @@ def kin_error_func_wrt_a_3(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_a_3, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_a_4(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_a_4(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.jacobian(a_4)
@@ -171,10 +171,10 @@ def kin_error_func_wrt_a_4(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_a_4, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_X_f(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_X_f(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.jacobian(X_f)
@@ -182,10 +182,10 @@ def kin_error_func_wrt_X_f(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_X_f, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_m_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_m_0(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.diff(m_0)
@@ -193,10 +193,10 @@ def kin_error_func_wrt_m_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_m_0, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_n_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_n_0(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.diff(n_0)
@@ -204,10 +204,10 @@ def kin_error_func_wrt_n_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_n_0, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_k_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_k_0(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.diff(k_0)
@@ -215,10 +215,10 @@ def kin_error_func_wrt_k_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_T
 residual_func_codegen = codegen.Codegen.function(func=kin_error_func_wrt_k_0, config=codegen.CppConfig(),)
 residual_func_codegen_data = residual_func_codegen.generate_function(output_dir=out_put_save_directory)
 
-def kin_error_func_wrt_h_0(r_delta: sf.Symbol('r_delta'), r_TSTA: sf.Symbol('r_TSTA'), r_Break: sf.Symbol('r_Break'),
-                   theta_delta: sf.Symbol('theta_delta'), theta_TSTA: sf.Symbol('theta_TSTA'), theta_Break: sf.Symbol('theta_Break'),
-                   a_1: sf.V2.symbolic("a_1"), a_2: sf.V2.symbolic("a_2"), a_3: sf.V2.symbolic("a_3"), a_4: sf.V2.symbolic("a_4"),
-                   m_0: sf.Symbol('m_0'), n_0: sf.Symbol('n_0'), k_0: sf.Symbol('k_0'), h_0: sf.Symbol('h_0'),
+def kin_error_func_wrt_h_0(r_delta: sf.Symbol, r_TSTA: sf.Symbol, r_Break: sf.Symbol,
+                   theta_delta: sf.Symbol, theta_TSTA: sf.Symbol, theta_Break: sf.Symbol,
+                   a_1: sf.V2, a_2: sf.V2, a_3: sf.V2, a_4: sf.V2,
+                   m_0: sf.Symbol, n_0: sf.Symbol, k_0: sf.Symbol, h_0: sf.Symbol,
                    X_f: sf.Matrix44) ->sf.Matrix:
     error_fk = kin_error_func(r_delta, r_TSTA, r_Break, theta_delta, theta_TSTA, theta_Break, a_1, a_2, a_3, a_4, m_0, n_0, k_0, h_0, X_f)
     error = error_fk.diff(h_0)

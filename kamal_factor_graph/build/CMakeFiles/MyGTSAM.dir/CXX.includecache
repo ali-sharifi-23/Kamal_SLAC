@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ali/Github/Kamal_Calibration/kamal_factor_graph/main.cpp
+iostream
+-
+fstream
+-
+sstream
+-
+string
+-
+vector
+-
+gtsam/nonlinear/NonlinearFactor.h
+-
+gtsam/nonlinear/NonlinearFactorGraph.h
+-
+boost/optional.hpp
+-
+gtsam/inference/Key.h
+-
+gtsam/geometry/Pose2.h
+-
+gtsam/geometry/Pose3.h
+-
+gtsam/nonlinear/Values.h
+-
+gtsam/nonlinear/LevenbergMarquardtOptimizer.h
+-
+gtsam/inference/Symbol.h
+-
+gtsam/base/Matrix.h
+-
+gtsam/geometry/Rot3.h
+-
+

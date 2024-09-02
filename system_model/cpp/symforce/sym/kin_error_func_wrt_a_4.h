@@ -30,19 +30,19 @@ namespace sym {
  *     n_0: Scalar
  *     k_0: Scalar
  *     h_0: Scalar
- *     X_f: Matrix44
+ *     t_f: Matrix31
  *
  * Outputs:
- *     res: Matrix62
+ *     res: Matrix32
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 6, 2> KinErrorFuncWrtA4(
+Eigen::Matrix<Scalar, 3, 2> KinErrorFuncWrtA4(
     const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break, const Scalar theta_delta,
     const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 2, 1>& a_1,
     const Eigen::Matrix<Scalar, 2, 1>& a_2, const Eigen::Matrix<Scalar, 2, 1>& a_3,
     const Eigen::Matrix<Scalar, 2, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
-    const Scalar h_0, const Eigen::Matrix<Scalar, 4, 4>& X_f) {
-  // Total ops: 0
+    const Scalar h_0, const Eigen::Matrix<Scalar, 3, 1>& t_f) {
+  // Total ops: 11
 
   // Unused inputs
   (void)r_delta;
@@ -54,21 +54,26 @@ Eigen::Matrix<Scalar, 6, 2> KinErrorFuncWrtA4(
   (void)a_1;
   (void)a_2;
   (void)a_3;
-  (void)a_4;
   (void)m_0;
   (void)n_0;
   (void)k_0;
   (void)h_0;
-  (void)X_f;
 
   // Input arrays
 
-  // Intermediate terms (0)
+  // Intermediate terms (3)
+  const Scalar _tmp0 = -a_4(0, 0) + t_f(0, 0);
+  const Scalar _tmp1 = -a_4(1, 0) + t_f(1, 0);
+  const Scalar _tmp2 =
+      2 / std::sqrt(Scalar(std::pow(_tmp0, Scalar(2)) + std::pow(_tmp1, Scalar(2))));
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 6, 2> _res;
+  Eigen::Matrix<Scalar, 3, 2> _res;
 
   _res.setZero();
+
+  _res(2, 0) = -_tmp0 * _tmp2;
+  _res(2, 1) = -_tmp1 * _tmp2;
 
   return _res;
 }  // NOLINT(readability/fn_size)

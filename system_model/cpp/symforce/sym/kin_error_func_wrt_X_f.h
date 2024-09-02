@@ -30,19 +30,19 @@ namespace sym {
  *     n_0: Scalar
  *     k_0: Scalar
  *     h_0: Scalar
- *     X_f: Matrix44
+ *     t_f: Matrix31
  *
  * Outputs:
- *     res: Matrix6_16
+ *     res: Matrix33
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 6, 16> KinErrorFuncWrtXF(
+Eigen::Matrix<Scalar, 3, 3> KinErrorFuncWrtXF(
     const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break, const Scalar theta_delta,
     const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 2, 1>& a_1,
     const Eigen::Matrix<Scalar, 2, 1>& a_2, const Eigen::Matrix<Scalar, 2, 1>& a_3,
     const Eigen::Matrix<Scalar, 2, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
-    const Scalar h_0, const Eigen::Matrix<Scalar, 4, 4>& X_f) {
-  // Total ops: 0
+    const Scalar h_0, const Eigen::Matrix<Scalar, 3, 1>& t_f) {
+  // Total ops: 40
 
   // Unused inputs
   (void)r_delta;
@@ -51,31 +51,47 @@ Eigen::Matrix<Scalar, 6, 16> KinErrorFuncWrtXF(
   (void)theta_delta;
   (void)theta_TSTA;
   (void)theta_Break;
-  (void)a_1;
-  (void)a_2;
-  (void)a_3;
-  (void)a_4;
   (void)m_0;
   (void)n_0;
   (void)k_0;
   (void)h_0;
-  (void)X_f;
 
   // Input arrays
 
-  // Intermediate terms (0)
+  // Intermediate terms (16)
+  const Scalar _tmp0 = -a_1(1, 0) + t_f(1, 0);
+  const Scalar _tmp1 = -a_1(0, 0) + t_f(0, 0);
+  const Scalar _tmp2 = std::pow(Scalar(std::pow(_tmp0, Scalar(2)) + std::pow(_tmp1, Scalar(2))),
+                                Scalar(Scalar(-1) / Scalar(2)));
+  const Scalar _tmp3 = _tmp1 * _tmp2;
+  const Scalar _tmp4 = -a_2(1, 0) + t_f(1, 0);
+  const Scalar _tmp5 = -a_2(0, 0) + t_f(0, 0);
+  const Scalar _tmp6 = std::pow(Scalar(std::pow(_tmp4, Scalar(2)) + std::pow(_tmp5, Scalar(2))),
+                                Scalar(Scalar(-1) / Scalar(2)));
+  const Scalar _tmp7 = _tmp5 * _tmp6;
+  const Scalar _tmp8 = -a_3(0, 0) + t_f(0, 0);
+  const Scalar _tmp9 = -a_3(1, 0) + t_f(1, 0);
+  const Scalar _tmp10 =
+      2 / std::sqrt(Scalar(std::pow(_tmp8, Scalar(2)) + std::pow(_tmp9, Scalar(2))));
+  const Scalar _tmp11 = -a_4(0, 0) + t_f(0, 0);
+  const Scalar _tmp12 = -a_4(1, 0) + t_f(1, 0);
+  const Scalar _tmp13 =
+      2 / std::sqrt(Scalar(std::pow(_tmp11, Scalar(2)) + std::pow(_tmp12, Scalar(2))));
+  const Scalar _tmp14 = _tmp0 * _tmp2;
+  const Scalar _tmp15 = _tmp4 * _tmp6;
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 6, 16> _res;
+  Eigen::Matrix<Scalar, 3, 3> _res;
 
-  _res.setZero();
-
-  _res(0, 0) = -1;
-  _res(1, 1) = -1;
-  _res(2, 2) = -1;
-  _res(3, 3) = -1;
-  _res(4, 4) = -1;
-  _res(5, 5) = -1;
+  _res(0, 0) = _tmp3 + _tmp7;
+  _res(1, 0) = _tmp10 * _tmp8 + _tmp3;
+  _res(2, 0) = _tmp11 * _tmp13 + _tmp7;
+  _res(0, 1) = _tmp14 + _tmp15;
+  _res(1, 1) = _tmp10 * _tmp9 + _tmp14;
+  _res(2, 1) = _tmp12 * _tmp13 + _tmp15;
+  _res(0, 2) = 0;
+  _res(1, 2) = 0;
+  _res(2, 2) = 0;
 
   return _res;
 }  // NOLINT(readability/fn_size)

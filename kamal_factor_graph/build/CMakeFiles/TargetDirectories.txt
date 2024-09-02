@@ -1,0 +1,3 @@
+/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build/CMakeFiles/edit_cache.dir
+/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build/CMakeFiles/rebuild_cache.dir
+/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build/CMakeFiles/MyGTSAM.dir
