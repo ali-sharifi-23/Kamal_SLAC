@@ -22,10 +22,10 @@ namespace sym {
  *     theta_delta: Scalar
  *     theta_TSTA: Scalar
  *     theta_Break: Scalar
- *     a_1: Matrix21
- *     a_2: Matrix21
- *     a_3: Matrix21
- *     a_4: Matrix21
+ *     a_1: Matrix31
+ *     a_2: Matrix31
+ *     a_3: Matrix31
+ *     a_4: Matrix31
  *     m_0: Scalar
  *     n_0: Scalar
  *     k_0: Scalar
@@ -38,9 +38,9 @@ namespace sym {
 template <typename Scalar>
 Eigen::Matrix<Scalar, 3, 1> KinErrorFuncWrtK0(
     const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break, const Scalar theta_delta,
-    const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 2, 1>& a_1,
-    const Eigen::Matrix<Scalar, 2, 1>& a_2, const Eigen::Matrix<Scalar, 2, 1>& a_3,
-    const Eigen::Matrix<Scalar, 2, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
+    const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 3, 1>& a_1,
+    const Eigen::Matrix<Scalar, 3, 1>& a_2, const Eigen::Matrix<Scalar, 3, 1>& a_3,
+    const Eigen::Matrix<Scalar, 3, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
     const Scalar h_0, const Eigen::Matrix<Scalar, 3, 1>& t_f) {
   // Total ops: 0
 

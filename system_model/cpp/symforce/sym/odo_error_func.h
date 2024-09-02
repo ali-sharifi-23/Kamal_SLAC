@@ -8,8 +8,6 @@
 
 #include <Eigen/Core>
 
-#include <sym/rot3.h>
-
 namespace sym {
 
 /**
@@ -18,119 +16,35 @@ namespace sym {
  * Symbolic function: odo_error_func
  *
  * Args:
- *     Rot_i: Rot3
  *     t_i: Matrix31
- *     Rot_f: Rot3
  *     t_f: Matrix31
- *     Rot_odo: Rot3
  *     t_odo: Matrix31
  *     s: Scalar
  *     epsilon: Scalar
  *
  * Outputs:
- *     res: Matrix61
+ *     res: Matrix31
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 6, 1> OdoErrorFunc(const sym::Rot3<Scalar>& Rot_i,
-                                         const Eigen::Matrix<Scalar, 3, 1>& t_i,
-                                         const sym::Rot3<Scalar>& Rot_f,
+Eigen::Matrix<Scalar, 3, 1> OdoErrorFunc(const Eigen::Matrix<Scalar, 3, 1>& t_i,
                                          const Eigen::Matrix<Scalar, 3, 1>& t_f,
-                                         const sym::Rot3<Scalar>& Rot_odo,
                                          const Eigen::Matrix<Scalar, 3, 1>& t_odo, const Scalar s,
                                          const Scalar epsilon) {
-  // Total ops: 229
+  // Total ops: 9
+
+  // Unused inputs
+  (void)epsilon;
 
   // Input arrays
-  const Eigen::Matrix<Scalar, 4, 1>& _Rot_i = Rot_i.Data();
-  const Eigen::Matrix<Scalar, 4, 1>& _Rot_f = Rot_f.Data();
-  const Eigen::Matrix<Scalar, 4, 1>& _Rot_odo = Rot_odo.Data();
 
-  // Intermediate terms (57)
-  const Scalar _tmp0 =
-      _Rot_f[0] * _Rot_i[2] - _Rot_f[1] * _Rot_i[3] - _Rot_f[2] * _Rot_i[0] + _Rot_f[3] * _Rot_i[1];
-  const Scalar _tmp1 = -_Rot_f[0] * _Rot_i[3] - _Rot_f[1] * _Rot_i[2] + _Rot_f[2] * _Rot_i[1] +
-                       _Rot_f[3] * _Rot_i[0];
-  const Scalar _tmp2 = -_Rot_f[0] * _Rot_i[1] + _Rot_f[1] * _Rot_i[0] - _Rot_f[2] * _Rot_i[3] +
-                       _Rot_f[3] * _Rot_i[2];
-  const Scalar _tmp3 =
-      _Rot_f[0] * _Rot_i[0] + _Rot_f[1] * _Rot_i[1] + _Rot_f[2] * _Rot_i[2] + _Rot_f[3] * _Rot_i[3];
-  const Scalar _tmp4 = -_Rot_odo[0] * _tmp1 - _Rot_odo[1] * _tmp0 - _Rot_odo[2] * _tmp2;
-  const Scalar _tmp5 = _Rot_odo[3] * _tmp3;
-  const Scalar _tmp6 = std::min<Scalar>(1 - epsilon, std::fabs(_tmp4 - _tmp5));
-  const Scalar _tmp7 =
-      2 * (2 * std::min<Scalar>(0, (((-_tmp4 + _tmp5) > 0) - ((-_tmp4 + _tmp5) < 0))) + 1) *
-      std::acos(_tmp6) / std::sqrt(Scalar(1 - std::pow(_tmp6, Scalar(2))));
-  const Scalar _tmp8 = 2 * _Rot_f[2] * _Rot_f[3];
-  const Scalar _tmp9 = 2 * _Rot_f[1];
-  const Scalar _tmp10 = _Rot_f[0] * _tmp9;
-  const Scalar _tmp11 = _tmp10 + _tmp8;
-  const Scalar _tmp12 = _Rot_f[3] * _tmp9;
-  const Scalar _tmp13 = 2 * _Rot_f[0];
-  const Scalar _tmp14 = _Rot_f[2] * _tmp13;
-  const Scalar _tmp15 = -_tmp12 + _tmp14;
-  const Scalar _tmp16 = -2 * std::pow(_Rot_f[2], Scalar(2));
-  const Scalar _tmp17 = 1 - 2 * std::pow(_Rot_f[1], Scalar(2));
-  const Scalar _tmp18 = _tmp16 + _tmp17;
-  const Scalar _tmp19 = -2 * std::pow(_tmp0, Scalar(2));
-  const Scalar _tmp20 = 1 - 2 * std::pow(_tmp2, Scalar(2));
-  const Scalar _tmp21 = -2 * std::pow(_Rot_odo[2], Scalar(2));
-  const Scalar _tmp22 = 1 - 2 * std::pow(_Rot_odo[1], Scalar(2));
-  const Scalar _tmp23 = Scalar(1.0) / (s);
-  const Scalar _tmp24 = _tmp23 * t_odo(0, 0);
-  const Scalar _tmp25 = 2 * _Rot_odo[0] * _Rot_odo[1];
-  const Scalar _tmp26 = 2 * _Rot_odo[3];
-  const Scalar _tmp27 = _Rot_odo[2] * _tmp26;
-  const Scalar _tmp28 = _tmp23 * t_odo(1, 0);
-  const Scalar _tmp29 = _Rot_odo[1] * _tmp26;
-  const Scalar _tmp30 = 2 * _Rot_odo[2];
-  const Scalar _tmp31 = _Rot_odo[0] * _tmp30;
-  const Scalar _tmp32 = _tmp23 * t_odo(2, 0);
-  const Scalar _tmp33 =
-      _tmp24 * (_tmp21 + _tmp22) + _tmp28 * (_tmp25 + _tmp27) + _tmp32 * (-_tmp29 + _tmp31);
-  const Scalar _tmp34 = 2 * _tmp2;
-  const Scalar _tmp35 = _tmp1 * _tmp34;
-  const Scalar _tmp36 = 2 * _tmp0;
-  const Scalar _tmp37 = _tmp3 * _tmp36;
-  const Scalar _tmp38 = _Rot_odo[1] * _tmp30;
-  const Scalar _tmp39 = _Rot_odo[0] * _tmp26;
-  const Scalar _tmp40 = -2 * std::pow(_Rot_odo[0], Scalar(2));
-  const Scalar _tmp41 =
-      _tmp24 * (_tmp29 + _tmp31) + _tmp28 * (_tmp38 - _tmp39) + _tmp32 * (_tmp22 + _tmp40);
-  const Scalar _tmp42 = _tmp1 * _tmp36;
-  const Scalar _tmp43 = _tmp3 * _tmp34;
-  const Scalar _tmp44 =
-      _tmp24 * (_tmp25 - _tmp27) + _tmp28 * (_tmp21 + _tmp40 + 1) + _tmp32 * (_tmp38 + _tmp39);
-  const Scalar _tmp45 = _tmp10 - _tmp8;
-  const Scalar _tmp46 = _Rot_f[2] * _tmp9;
-  const Scalar _tmp47 = _Rot_f[3] * _tmp13;
-  const Scalar _tmp48 = _tmp46 + _tmp47;
-  const Scalar _tmp49 = -2 * std::pow(_Rot_f[0], Scalar(2));
-  const Scalar _tmp50 = _tmp16 + _tmp49 + 1;
-  const Scalar _tmp51 = -2 * std::pow(_tmp1, Scalar(2));
-  const Scalar _tmp52 = _tmp2 * _tmp36;
-  const Scalar _tmp53 = 2 * _tmp1 * _tmp3;
-  const Scalar _tmp54 = _tmp46 - _tmp47;
-  const Scalar _tmp55 = _tmp12 + _tmp14;
-  const Scalar _tmp56 = _tmp17 + _tmp49;
+  // Intermediate terms (0)
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 6, 1> _res;
+  Eigen::Matrix<Scalar, 3, 1> _res;
 
-  _res(0, 0) = _tmp7 * (-_Rot_odo[0] * _tmp3 + _Rot_odo[1] * _tmp2 - _Rot_odo[2] * _tmp0 +
-                        _Rot_odo[3] * _tmp1);
-  _res(1, 0) = _tmp7 * (-_Rot_odo[0] * _tmp2 - _Rot_odo[1] * _tmp3 + _Rot_odo[2] * _tmp1 +
-                        _Rot_odo[3] * _tmp0);
-  _res(2, 0) = _tmp7 * (_Rot_odo[0] * _tmp0 - _Rot_odo[1] * _tmp1 - _Rot_odo[2] * _tmp3 +
-                        _Rot_odo[3] * _tmp2);
-  _res(3, 0) = -_tmp11 * t_f(1, 0) + _tmp11 * t_i(1, 0) - _tmp15 * t_f(2, 0) + _tmp15 * t_i(2, 0) -
-               _tmp18 * t_f(0, 0) + _tmp18 * t_i(0, 0) - _tmp33 * (_tmp19 + _tmp20) -
-               _tmp41 * (_tmp35 + _tmp37) - _tmp44 * (_tmp42 - _tmp43);
-  _res(4, 0) = -_tmp33 * (_tmp42 + _tmp43) - _tmp41 * (_tmp52 - _tmp53) -
-               _tmp44 * (_tmp20 + _tmp51) - _tmp45 * t_f(0, 0) + _tmp45 * t_i(0, 0) -
-               _tmp48 * t_f(2, 0) + _tmp48 * t_i(2, 0) - _tmp50 * t_f(1, 0) + _tmp50 * t_i(1, 0);
-  _res(5, 0) = -_tmp33 * (_tmp35 - _tmp37) - _tmp41 * (_tmp19 + _tmp51 + 1) -
-               _tmp44 * (_tmp52 + _tmp53) - _tmp54 * t_f(1, 0) + _tmp54 * t_i(1, 0) -
-               _tmp55 * t_f(0, 0) + _tmp55 * t_i(0, 0) - _tmp56 * t_f(2, 0) + _tmp56 * t_i(2, 0);
+  _res(0, 0) = -s * t_odo(0, 0) + t_f(0, 0) - t_i(0, 0);
+  _res(1, 0) = -s * t_odo(1, 0) + t_f(1, 0) - t_i(1, 0);
+  _res(2, 0) = -s * t_odo(2, 0) + t_f(2, 0) - t_i(2, 0);
 
   return _res;
 }  // NOLINT(readability/fn_size)

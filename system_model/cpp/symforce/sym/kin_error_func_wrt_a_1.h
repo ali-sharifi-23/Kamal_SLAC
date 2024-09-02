@@ -22,10 +22,10 @@ namespace sym {
  *     theta_delta: Scalar
  *     theta_TSTA: Scalar
  *     theta_Break: Scalar
- *     a_1: Matrix21
- *     a_2: Matrix21
- *     a_3: Matrix21
- *     a_4: Matrix21
+ *     a_1: Matrix31
+ *     a_2: Matrix31
+ *     a_3: Matrix31
+ *     a_4: Matrix31
  *     m_0: Scalar
  *     n_0: Scalar
  *     k_0: Scalar
@@ -33,14 +33,14 @@ namespace sym {
  *     t_f: Matrix31
  *
  * Outputs:
- *     res: Matrix32
+ *     res: Matrix33
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 3, 2> KinErrorFuncWrtA1(
+Eigen::Matrix<Scalar, 3, 3> KinErrorFuncWrtA1(
     const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break, const Scalar theta_delta,
-    const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 2, 1>& a_1,
-    const Eigen::Matrix<Scalar, 2, 1>& a_2, const Eigen::Matrix<Scalar, 2, 1>& a_3,
-    const Eigen::Matrix<Scalar, 2, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
+    const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 3, 1>& a_1,
+    const Eigen::Matrix<Scalar, 3, 1>& a_2, const Eigen::Matrix<Scalar, 3, 1>& a_3,
+    const Eigen::Matrix<Scalar, 3, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
     const Scalar h_0, const Eigen::Matrix<Scalar, 3, 1>& t_f) {
   // Total ops: 10
 
@@ -70,14 +70,14 @@ Eigen::Matrix<Scalar, 3, 2> KinErrorFuncWrtA1(
   const Scalar _tmp4 = -_tmp0 * _tmp2;
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 3, 2> _res;
+  Eigen::Matrix<Scalar, 3, 3> _res;
+
+  _res.setZero();
 
   _res(0, 0) = _tmp3;
   _res(1, 0) = _tmp3;
-  _res(2, 0) = 0;
   _res(0, 1) = _tmp4;
   _res(1, 1) = _tmp4;
-  _res(2, 1) = 0;
 
   return _res;
 }  // NOLINT(readability/fn_size)
