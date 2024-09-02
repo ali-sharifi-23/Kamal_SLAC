@@ -18,8 +18,8 @@ namespace sym {
  * Args:
  *     t_i: Matrix31
  *     t_f: Matrix31
- *     t_odo: Matrix31
  *     s: Scalar
+ *     t_odo: Matrix31
  *     epsilon: Scalar
  *
  * Outputs:
@@ -28,15 +28,16 @@ namespace sym {
 template <typename Scalar>
 Eigen::Matrix<Scalar, 3, 3> OdoErrorFuncWrtPosF(const Eigen::Matrix<Scalar, 3, 1>& t_i,
                                                 const Eigen::Matrix<Scalar, 3, 1>& t_f,
+                                                const Scalar s,
                                                 const Eigen::Matrix<Scalar, 3, 1>& t_odo,
-                                                const Scalar s, const Scalar epsilon) {
+                                                const Scalar epsilon) {
   // Total ops: 0
 
   // Unused inputs
   (void)t_i;
   (void)t_f;
-  (void)t_odo;
   (void)s;
+  (void)t_odo;
   (void)epsilon;
 
   // Input arrays
