@@ -16,38 +16,38 @@ namespace sym {
  * Symbolic function: odo_error_func_wrt_s
  *
  * Args:
- *     X_i: Matrix44
- *     X_f: Matrix44
- *     Rot_odo: Matrix33
- *     t_odo: Matrix31
+ *     t_i: Matrix31
+ *     t_f: Matrix31
  *     s: Scalar
+ *     t_odo: Matrix31
+ *     epsilon: Scalar
  *
  * Outputs:
- *     res: Matrix61
+ *     res: Matrix31
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 6, 1> OdoErrorFuncWrtS(const Eigen::Matrix<Scalar, 4, 4>& X_i,
-                                             const Eigen::Matrix<Scalar, 4, 4>& X_f,
-                                             const Eigen::Matrix<Scalar, 3, 3>& Rot_odo,
+Eigen::Matrix<Scalar, 3, 1> OdoErrorFuncWrtS(const Eigen::Matrix<Scalar, 3, 1>& t_i,
+                                             const Eigen::Matrix<Scalar, 3, 1>& t_f, const Scalar s,
                                              const Eigen::Matrix<Scalar, 3, 1>& t_odo,
-                                             const Scalar s) {
-  // Total ops: 0
+                                             const Scalar epsilon) {
+  // Total ops: 3
 
   // Unused inputs
-  (void)X_i;
-  (void)X_f;
-  (void)Rot_odo;
-  (void)t_odo;
+  (void)t_i;
+  (void)t_f;
   (void)s;
+  (void)epsilon;
 
   // Input arrays
 
   // Intermediate terms (0)
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 6, 1> _res;
+  Eigen::Matrix<Scalar, 3, 1> _res;
 
-  _res.setZero();
+  _res(0, 0) = -t_odo(0, 0);
+  _res(1, 0) = -t_odo(1, 0);
+  _res(2, 0) = -t_odo(2, 0);
 
   return _res;
 }  // NOLINT(readability/fn_size)

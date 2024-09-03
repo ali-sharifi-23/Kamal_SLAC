@@ -3,24 +3,13 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <gtsam/nonlinear/NonlinearFactor.h>
-#include <gtsam/nonlinear/NonlinearFactorGraph.h>
-#include <boost/optional.hpp>
-#include <gtsam/inference/Key.h>
-#include <gtsam/geometry/Pose2.h>
-#include <gtsam/geometry/Pose3.h>
-#include <gtsam/nonlinear/Values.h>
-#include <gtsam/nonlinear/LevenbergMarquardtOptimizer.h>
-#include <gtsam/inference/Symbol.h>
-#include <gtsam/base/Matrix.h>
-#include <gtsam/geometry/Rot3.h>
+#include "include/KamalFactor.h"
 
 using namespace std;
 using namespace gtsam;
 
 int main(int argc, char* argv[]) {
 
-    // open csv file
     std::ifstream file(" ");
     std::vector<std::vector<double>> data;
     if (file) {
@@ -40,18 +29,60 @@ int main(int argc, char* argv[]) {
     }
 
     NonlinearFactorGraph graph;
-    Values initial_estimate; // Values is a class in GTSAM that holds an estimate of the variables in the factor graph.
-                             // It acts as a container for the current guesses or estimates of the variables' values, which will be refined through optimization.
+    Values initial_estimate;
 
-    // defining noise models
-    // auto DiamondCalibrationNoise = noiseModel::Isotropic::Sigma(3, 0.5);
+    auto OdometryNoise = noiseModel::Isotropic::Sigma(3, 0.5);
+    auto KinematicNoise = noiseModel::Isotropic::Sigma(3, 0.5);
 
-    // constructing graph
-    // graph.add(std::make_shared<DiamondCalibrationFactor>(Symbol('o', 0), Symbol('o', 1), Symbol('x', 0), Symbol('x', 1), Symbol('r', 0), theta11, theta12, theta21, theta22, RotGT1,  RotGT2, DiamondCalibrationNoise));
+    for(int i = 0; i < data.size(); i++)
+    {
+        gtsam::Point3 t_odo;
+        double r_delta;
+        double r_TSTA;
+        double r_Break;
+        double theta_delta;
+        double theta_TSTA;
+        double theta_Break;
 
-    // inserting initial values
-    // initial_estimate.insert(Symbol('x', 0), 45.0 * M_PI/180.0);
+        graph.add(std::make_shared<OdomertryFactor>(Symbol('X', i), Symbol('X', i+1), Symbol('s'), t_odo, OdometryNoise));
+        graph.add(std::make_shared<KinFactor>(Symbol('a', 1), Symbol('a', 2), Symbol('a', 3), Symbol('a',4),
+                                              Symbol('X', i+1),
+                                              Symbol('m', 0), Symbol('n', 0), Symbol('k', 0), Symbol('h', 0),
+                                              r_delta, r_TSTA, r_Break,
+                                              theta_delta, theta_TSTA, theta_Break,
+                                              KinematicNoise));
+    }
 
+    initial_estimate.insert(Symbol('X', 0), gtsam::Point3(0,0,0));
+    initial_estimate.insert(Symbol('s'), 0);
+    initial_estimate.insert(Symbol('a', 1), gtsam::Point3(0,0,0));
+    initial_estimate.insert(Symbol('a', 2), gtsam::Point3(0,0,0));
+    initial_estimate.insert(Symbol('a', 3), gtsam::Point3(0,0,0));
+    initial_estimate.insert(Symbol('a', 4), gtsam::Point3(0,0,0));
+    initial_estimate.insert(Symbol('m', 0), 0);
+    initial_estimate.insert(Symbol('n', 0), 0);
+    initial_estimate.insert(Symbol('k', 0), 0);
+    initial_estimate.insert(Symbol('h', 0), 0);
+
+    gtsam::LevenbergMarquardtParams params;
+    std::cout << std::endl;
+    LevenbergMarquardtOptimizer optimizer(graph, initial_estimate, params);
+    Values result_LM = optimizer.optimize();
+
+    std::cout << "------------------------ Calibration Results ------------------------" << std::endl<< std::endl;
+
+    std::cout << "Optimization Error: " << optimizer.error() << std::endl<< std::endl;
+    std::cout << "Initial Pose: " << (result_LM.at<gtsam::Point3>(Symbol('X', 0))) << std::endl<< std::endl;
+    std::cout << "l0_Delta: " << (result_LM.at<double>(Symbol('m', 0)) + result_LM.at<double>(Symbol('n', 0))) << std::endl;
+    std::cout << "l0_TSTA: " << (result_LM.at<double>(Symbol('m', 0)) + 2*result_LM.at<double>(Symbol('k', 0))) << std::endl;
+    std::cout << "l0_Break: " << (result_LM.at<double>(Symbol('n', 0)) + 2*result_LM.at<double>(Symbol('h', 0))) << std::endl<< std::endl;
+    std::cout << "Camera Scale: " << (result_LM.at<double>(Symbol('s'))) << std::endl<< std::endl;
+    std::cout << "Anchor 1: " << (result_LM.at<gtsam::Point3>(Symbol('a', 1))) << std::endl;
+    std::cout << "Anchor 2: " << (result_LM.at<gtsam::Point3>(Symbol('a', 2))) << std::endl;
+    std::cout << "Anchor 3: " << (result_LM.at<gtsam::Point3>(Symbol('a', 3))) << std::endl;
+    std::cout << "Anchor 4: " << (result_LM.at<gtsam::Point3>(Symbol('a', 4))) << std::endl<< std::endl;
+
+    std::cout << "---------------------------------------------------------------------" << std::endl;
 
     return 0;
 }

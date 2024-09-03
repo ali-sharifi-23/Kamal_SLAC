@@ -16,33 +16,38 @@ namespace sym {
  * Symbolic function: kin_error_func
  *
  * Args:
+ *     a_1: Matrix31
+ *     a_2: Matrix31
+ *     a_3: Matrix31
+ *     a_4: Matrix31
+ *     t_f: Matrix31
+ *     m_0: Scalar
+ *     n_0: Scalar
+ *     k_0: Scalar
+ *     h_0: Scalar
  *     r_delta: Scalar
  *     r_TSTA: Scalar
  *     r_Break: Scalar
  *     theta_delta: Scalar
  *     theta_TSTA: Scalar
  *     theta_Break: Scalar
- *     a_1: Matrix31
- *     a_2: Matrix31
- *     a_3: Matrix31
- *     a_4: Matrix31
- *     m_0: Scalar
- *     n_0: Scalar
- *     k_0: Scalar
- *     h_0: Scalar
- *     t_f: Matrix31
+ *     epsilon: Scalar
  *
  * Outputs:
  *     res: Matrix31
  */
 template <typename Scalar>
 Eigen::Matrix<Scalar, 3, 1> KinErrorFunc(
-    const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break, const Scalar theta_delta,
-    const Scalar theta_TSTA, const Scalar theta_Break, const Eigen::Matrix<Scalar, 3, 1>& a_1,
-    const Eigen::Matrix<Scalar, 3, 1>& a_2, const Eigen::Matrix<Scalar, 3, 1>& a_3,
-    const Eigen::Matrix<Scalar, 3, 1>& a_4, const Scalar m_0, const Scalar n_0, const Scalar k_0,
-    const Scalar h_0, const Eigen::Matrix<Scalar, 3, 1>& t_f) {
+    const Eigen::Matrix<Scalar, 3, 1>& a_1, const Eigen::Matrix<Scalar, 3, 1>& a_2,
+    const Eigen::Matrix<Scalar, 3, 1>& a_3, const Eigen::Matrix<Scalar, 3, 1>& a_4,
+    const Eigen::Matrix<Scalar, 3, 1>& t_f, const Scalar m_0, const Scalar n_0, const Scalar k_0,
+    const Scalar h_0, const Scalar r_delta, const Scalar r_TSTA, const Scalar r_Break,
+    const Scalar theta_delta, const Scalar theta_TSTA, const Scalar theta_Break,
+    const Scalar epsilon) {
   // Total ops: 43
+
+  // Unused inputs
+  (void)epsilon;
 
   // Input arrays
 

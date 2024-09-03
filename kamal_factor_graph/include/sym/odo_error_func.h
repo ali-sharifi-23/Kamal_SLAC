@@ -16,67 +16,35 @@ namespace sym {
  * Symbolic function: odo_error_func
  *
  * Args:
- *     X_i: Matrix44
- *     X_f: Matrix44
- *     Rot_odo: Matrix33
- *     t_odo: Matrix31
+ *     t_i: Matrix31
+ *     t_f: Matrix31
  *     s: Scalar
+ *     t_odo: Matrix31
+ *     epsilon: Scalar
  *
  * Outputs:
- *     res: Matrix61
+ *     res: Matrix31
  */
 template <typename Scalar>
-Eigen::Matrix<Scalar, 6, 1> OdoErrorFunc(const Eigen::Matrix<Scalar, 4, 4>& X_i,
-                                         const Eigen::Matrix<Scalar, 4, 4>& X_f,
-                                         const Eigen::Matrix<Scalar, 3, 3>& Rot_odo,
-                                         const Eigen::Matrix<Scalar, 3, 1>& t_odo, const Scalar s) {
-  // Total ops: 127
+Eigen::Matrix<Scalar, 3, 1> OdoErrorFunc(const Eigen::Matrix<Scalar, 3, 1>& t_i,
+                                         const Eigen::Matrix<Scalar, 3, 1>& t_f, const Scalar s,
+                                         const Eigen::Matrix<Scalar, 3, 1>& t_odo,
+                                         const Scalar epsilon) {
+  // Total ops: 9
 
   // Unused inputs
-  (void)t_odo;
-  (void)s;
+  (void)epsilon;
 
   // Input arrays
 
-  // Intermediate terms (22)
-  const Scalar _tmp0 = Scalar(1.0) / (X_i(0, 0));
-  const Scalar _tmp1 = X_i(1, 0) * _tmp0;
-  const Scalar _tmp2 = Scalar(1.0) / (-X_i(0, 1) * _tmp1 + X_i(1, 1));
-  const Scalar _tmp3 = -X_i(0, 3) * _tmp1 + X_i(1, 3);
-  const Scalar _tmp4 = X_i(2, 0) * _tmp0;
-  const Scalar _tmp5 = _tmp2 * (-X_i(0, 1) * _tmp4 + X_i(2, 1));
-  const Scalar _tmp6 = _tmp1 * _tmp5 - _tmp4;
-  const Scalar _tmp7 = -X_i(0, 2) * _tmp1 + X_i(1, 2);
-  const Scalar _tmp8 = Scalar(1.0) / (-X_i(0, 2) * _tmp4 + X_i(2, 2) - _tmp5 * _tmp7);
-  const Scalar _tmp9 = X_i(3, 0) * _tmp0;
-  const Scalar _tmp10 = _tmp2 * (-X_i(0, 1) * _tmp9 + X_i(3, 1));
-  const Scalar _tmp11 = _tmp8 * (-X_i(0, 2) * _tmp9 + X_i(3, 2) - _tmp10 * _tmp7);
-  const Scalar _tmp12 = -X_i(0, 3) * _tmp4 + X_i(2, 3) - _tmp3 * _tmp5;
-  const Scalar _tmp13 =
-      Scalar(1.0) / (-X_i(0, 3) * _tmp9 + X_i(3, 3) - _tmp10 * _tmp3 - _tmp11 * _tmp12);
-  const Scalar _tmp14 = _tmp13 * (_tmp1 * _tmp10 - _tmp11 * _tmp6 - _tmp9);
-  const Scalar _tmp15 = _tmp8 * (-_tmp12 * _tmp14 + _tmp6);
-  const Scalar _tmp16 = _tmp2 * (-_tmp1 - _tmp14 * _tmp3 - _tmp15 * _tmp7);
-  const Scalar _tmp17 = _tmp0 * (-X_i(0, 1) * _tmp16 - X_i(0, 2) * _tmp15 - X_i(0, 3) * _tmp14 + 1);
-  const Scalar _tmp18 = _tmp13 * (-_tmp10 + _tmp11 * _tmp5);
-  const Scalar _tmp19 = _tmp8 * (-_tmp12 * _tmp18 - _tmp5);
-  const Scalar _tmp20 = _tmp2 * (-_tmp18 * _tmp3 - _tmp19 * _tmp7 + 1);
-  const Scalar _tmp21 = _tmp0 * (-X_i(0, 1) * _tmp20 - X_i(0, 2) * _tmp19 - X_i(0, 3) * _tmp18);
+  // Intermediate terms (0)
 
   // Output terms (1)
-  Eigen::Matrix<Scalar, 6, 1> _res;
+  Eigen::Matrix<Scalar, 3, 1> _res;
 
-  _res(0, 0) = -Rot_odo(0, 0) + X_f(0, 0) * _tmp17 + X_f(0, 1) * _tmp16 + X_f(0, 2) * _tmp15 +
-               X_f(0, 3) * _tmp14;
-  _res(1, 0) = -Rot_odo(1, 0) + X_f(1, 0) * _tmp17 + X_f(1, 1) * _tmp16 + X_f(1, 2) * _tmp15 +
-               X_f(1, 3) * _tmp14;
-  _res(2, 0) = -Rot_odo(2, 0) + X_f(2, 0) * _tmp17 + X_f(2, 1) * _tmp16 + X_f(2, 2) * _tmp15 +
-               X_f(2, 3) * _tmp14;
-  _res(3, 0) = X_f(3, 0) * _tmp17 + X_f(3, 1) * _tmp16 + X_f(3, 2) * _tmp15 + X_f(3, 3) * _tmp14;
-  _res(4, 0) = -Rot_odo(0, 1) + X_f(0, 0) * _tmp21 + X_f(0, 1) * _tmp20 + X_f(0, 2) * _tmp19 +
-               X_f(0, 3) * _tmp18;
-  _res(5, 0) = -Rot_odo(1, 1) + X_f(1, 0) * _tmp21 + X_f(1, 1) * _tmp20 + X_f(1, 2) * _tmp19 +
-               X_f(1, 3) * _tmp18;
+  _res(0, 0) = -s * t_odo(0, 0) + t_f(0, 0) - t_i(0, 0);
+  _res(1, 0) = -s * t_odo(1, 0) + t_f(1, 0) - t_i(1, 0);
+  _res(2, 0) = -s * t_odo(2, 0) + t_f(2, 0) - t_i(2, 0);
 
   return _res;
 }  // NOLINT(readability/fn_size)

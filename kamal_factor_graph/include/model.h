@@ -11,4 +11,4 @@
 #include "sym/kin_error_func_wrt_k_0.h"
 #include "sym/kin_error_func_wrt_m_0.h"
 #include "sym/kin_error_func_wrt_n_0.h"
-#include "sym/kin_error_func_wrt_X_f.h"
+#include "sym/kin_error_func_wrt_pos_f.h"
