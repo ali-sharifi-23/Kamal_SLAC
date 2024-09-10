@@ -24,9 +24,13 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/include/gtsam/3rdparty/SuiteSparse_config"
-  "/usr/include/gtsam/3rdparty/CCOLAMD"
-  "/usr/include/eigen3"
+  "/home/ali/matplotlib-cpp"
+  "/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include"
+  "/home/ali/miniconda3/include/python3.12"
+  "/usr/local/include/gtsam/3rdparty/SuiteSparse_config"
+  "/usr/local/include/gtsam/3rdparty/CCOLAMD"
+  "/usr/local/include/gtsam/3rdparty/metis"
+  "/usr/local/include/gtsam/3rdparty/Eigen"
   )
 
 # Targets to which this target links.

@@ -79,7 +79,8 @@ MyGTSAM_EXTERNAL_OBJECTS =
 
 MyGTSAM: CMakeFiles/MyGTSAM.dir/main.cpp.o
 MyGTSAM: CMakeFiles/MyGTSAM.dir/build.make
-MyGTSAM: /usr/lib/x86_64-linux-gnu/libgtsam.so.4.1.1
+MyGTSAM: /usr/local/lib/libgtsam.so.4.2.0
+MyGTSAM: /home/ali/miniconda3/lib/libpython3.12.so
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0
@@ -89,7 +90,7 @@ MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_timer.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0
-MyGTSAM: /usr/lib/x86_64-linux-gnu/libmetis.so
+MyGTSAM: /usr/local/lib/libmetis-gtsam.so
 MyGTSAM: CMakeFiles/MyGTSAM.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable MyGTSAM"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MyGTSAM.dir/link.txt --verbose=$(VERBOSE)

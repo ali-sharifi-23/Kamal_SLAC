@@ -5,11 +5,14 @@
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
 #include <boost/optional.hpp>
 #include <gtsam/inference/Key.h>
-#include <gtsam/geometry/Point3.h>
+#include <gtsam/geometry/Pose2.h>
+#include <gtsam/geometry/Pose3.h>
 #include <gtsam/nonlinear/Values.h>
 #include <gtsam/nonlinear/LevenbergMarquardtOptimizer.h>
 #include <gtsam/inference/Symbol.h>
 #include <gtsam/base/Matrix.h>
+#include <gtsam/geometry/Point3.h>
+#include <sym/rot3.h>
 #include "model.h"
 
 using namespace gtsam;
@@ -21,7 +24,7 @@ Eigen::Matrix<double, 3, 1> gtsam2eigen(const gtsam::Point3& gtsam_point3) {
 
 namespace gtsam
 {
-    class OdomertryFactor: public NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>
+    class OdometryFactor: public NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>
     {
       private:
 
@@ -31,13 +34,12 @@ namespace gtsam
 
       OdometryFactor(Key key1, Key key2, Key key3,
                      gtsam::Point3 t_odo_,
-                     const SharedNoiseModel &model)
-      : NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>(model, key1, key2, key3), t_odo(t_odo_){}
+                     const SharedNoiseModel &model): NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>(model, key1, key2, key3), t_odo(t_odo_){}
 
       Vector evaluateError(const gtsam::Point3 &t_i, const gtsam::Point3 &t_f, const double &scale,
-                             OptionalMatrixType H1,
-                             OptionalMatrixType H2,
-                             OptionalMatrixType H3) const override
+                             boost::optional<Matrix&> H1,
+                             boost::optional<Matrix&> H2,
+                             boost::optional<Matrix&> H3) const override
       {
         Eigen::Matrix<double, 3, 1> odo_error_func = sym::OdoErrorFunc(gtsam2eigen(t_i), gtsam2eigen(t_f), scale, gtsam2eigen(t_odo), sym::kDefaultEpsilon<double>);
 
@@ -84,15 +86,15 @@ namespace gtsam
 
       Vector evaluateError(const gtsam::Point3 &a1, const gtsam::Point3 &a2, const gtsam::Point3 &a3, const gtsam::Point3 &a4, const gtsam::Point3 &t_f,
                            const double &m_0, const double &n_0, const double &k_0, const double &h_0,
-                           OptionalMatrixType H1,
-                           OptionalMatrixType H2,
-                           OptionalMatrixType H3,
-                           OptionalMatrixType H4,
-                           OptionalMatrixType H5,
-                           OptionalMatrixType H6,
-                           OptionalMatrixType H7,
-                           OptionalMatrixType H8,
-                           OptionalMatrixType H9) const override
+                           boost::optional<Matrix&> H1,
+                           boost::optional<Matrix&> H2,
+                           boost::optional<Matrix&> H3,
+                           boost::optional<Matrix&> H4,
+                           boost::optional<Matrix&> H5,
+                           boost::optional<Matrix&> H6,
+                           boost::optional<Matrix&> H7,
+                           boost::optional<Matrix&> H8,
+                           boost::optional<Matrix&> H9) const override
       {
         Eigen::Matrix<double, 3, 1> kin_error_func = sym::KinErrorFunc(gtsam2eigen(a1), gtsam2eigen(a2), gtsam2eigen(a3), gtsam2eigen(a4),
                                                                        gtsam2eigen(t_f),
@@ -131,7 +133,7 @@ namespace gtsam
                                                                                      r_delta, r_TSTA, r_Break,
                                                                                      theta_delta, theta_TSTA, theta_Break,
                                                                                      sym::kDefaultEpsilon<double>);
-          *H3 = (Matrix(3,3) << kin_error_func_wrt_a2).finished();
+          *H3 = (Matrix(3,3) << kin_error_func_wrt_a3).finished();
         }
 
         if(H4)
@@ -142,7 +144,7 @@ namespace gtsam
                                                                                      r_delta, r_TSTA, r_Break,
                                                                                      theta_delta, theta_TSTA, theta_Break,
                                                                                      sym::kDefaultEpsilon<double>);
-          *H4 = (Matrix(3,3) << kin_error_func_wrt_a2).finished();
+          *H4 = (Matrix(3,3) << kin_error_func_wrt_a4).finished();
         }
 
         if(H5)
