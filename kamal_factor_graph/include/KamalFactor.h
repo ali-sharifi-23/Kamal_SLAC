@@ -3,6 +3,7 @@
 #include <iostream>
 #include <gtsam/nonlinear/NonlinearFactor.h>
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
+#include <gtsam/nonlinear/NonlinearOptimizer.h>
 #include <boost/optional.hpp>
 #include <gtsam/inference/Key.h>
 #include <gtsam/geometry/Pose2.h>
@@ -12,8 +13,10 @@
 #include <gtsam/inference/Symbol.h>
 #include <gtsam/base/Matrix.h>
 #include <gtsam/geometry/Point3.h>
-#include <sym/rot3.h>
+#include <gtsam/geometry/Rot3.h>
+#include <util/epsilon.h>
 #include "model.h"
+
 
 using namespace gtsam;
 using namespace std;
@@ -24,7 +27,7 @@ Eigen::Matrix<double, 3, 1> gtsam2eigen(const gtsam::Point3& gtsam_point3) {
 
 namespace gtsam
 {
-    class OdometryFactor: public NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>
+    class OdometryFactor: public NoiseModelFactorN<gtsam::Point3, gtsam::Point3, double>
     {
       private:
 
@@ -34,7 +37,7 @@ namespace gtsam
 
       OdometryFactor(Key key1, Key key2, Key key3,
                      gtsam::Point3 t_odo_,
-                     const SharedNoiseModel &model): NoiseModelFactor3<gtsam::Point3, gtsam::Point3, double>(model, key1, key2, key3), t_odo(t_odo_){}
+                     const SharedNoiseModel &model): NoiseModelFactorN<gtsam::Point3, gtsam::Point3, double>(model, key1, key2, key3), t_odo(t_odo_){}
 
       Vector evaluateError(const gtsam::Point3 &t_i, const gtsam::Point3 &t_f, const double &scale,
                              boost::optional<Matrix&> H1,

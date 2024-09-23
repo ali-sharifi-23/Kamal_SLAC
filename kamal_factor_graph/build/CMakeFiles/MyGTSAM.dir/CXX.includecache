@@ -13,6 +13,8 @@ gtsam/nonlinear/NonlinearFactor.h
 -
 gtsam/nonlinear/NonlinearFactorGraph.h
 -
+gtsam/nonlinear/NonlinearOptimizer.h
+-
 boost/optional.hpp
 -
 gtsam/inference/Key.h
@@ -31,7 +33,9 @@ gtsam/base/Matrix.h
 -
 gtsam/geometry/Point3.h
 -
-sym/rot3.h
+gtsam/geometry/Rot3.h
+-
+util/epsilon.h
 -
 model.h
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/model.h
@@ -109,17 +113,25 @@ Eigen/Core
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/sym/odo_error_func.h
 Eigen/Core
 -
+sym/rot3.h
+-
 
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/sym/odo_error_func_wrt_pos_f.h
 Eigen/Core
+-
+sym/rot3.h
 -
 
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/sym/odo_error_func_wrt_pos_i.h
 Eigen/Core
 -
+sym/rot3.h
+-
 
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/sym/odo_error_func_wrt_s.h
 Eigen/Core
+-
+sym/rot3.h
 -
 
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/main.cpp
@@ -137,6 +149,10 @@ boost/shared_ptr.hpp
 -
 include/KamalFactor.h
 /home/ali/Github/Kamal_Calibration/kamal_factor_graph/include/KamalFactor.h
+
+/usr/include/sym/util/epsilon.h
+limits
+-
 
 /usr/local/include/gtsam/3rdparty/Eigen/Eigen/Core
 src/Core/util/DisableStupidWarnings.h

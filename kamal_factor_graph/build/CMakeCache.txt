@@ -295,6 +295,9 @@ boost_thread_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_thread-1.71.0
 //The directory containing a CMake configuration file for boost_timer.
 boost_timer_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_timer-1.71.0
 
+//The directory containing a CMake configuration file for symforce.
+symforce_DIR:PATH=symforce_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries
@@ -456,7 +459,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake][cfound components: serialization system filesystem thread program_options date_time timer chrono regex ][v1.71.0(1.65)]
 //Details about finding Python3
-FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/ali/miniconda3/lib/libpython3.12.so][/home/ali/miniconda3/include/python3.12][/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include][cfound components: Development NumPy Interpreter ][v3.12.4()]
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/ali/miniconda3/lib/libpython3.12.so][/home/ali/miniconda3/include/python3.12][/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include][cfound components: Development NumPy Interpreter ][v3.12.2()]
 //ADVANCED property for variable: Python3_LIBRARY_DEBUG
 Python3_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Python3_LIBRARY_RELEASE
