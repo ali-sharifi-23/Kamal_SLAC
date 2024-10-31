@@ -17,7 +17,6 @@
 #include <util/epsilon.h>
 #include "model.h"
 
-
 using namespace gtsam;
 using namespace std;
 

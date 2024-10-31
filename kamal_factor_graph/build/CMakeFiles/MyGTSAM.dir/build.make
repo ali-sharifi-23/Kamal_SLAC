@@ -81,6 +81,10 @@ MyGTSAM: CMakeFiles/MyGTSAM.dir/main.cpp.o
 MyGTSAM: CMakeFiles/MyGTSAM.dir/build.make
 MyGTSAM: /usr/local/lib/libgtsam.so.4.2.0
 MyGTSAM: /home/ali/miniconda3/lib/libpython3.12.so
+MyGTSAM: /usr/lib/libsymforce_gen.so
+MyGTSAM: /usr/lib/libsymforce_opt.so
+MyGTSAM: /usr/lib/libsymforce_slam.so
+MyGTSAM: /usr/lib/libsymforce_cholesky.so
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 MyGTSAM: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0

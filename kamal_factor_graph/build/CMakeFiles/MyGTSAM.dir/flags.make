@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++17
 
 CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CHRONO_DYN_LINK -DBOOST_DATE_TIME_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DBOOST_TIMER_DYN_LINK
 
-CXX_INCLUDES = -I/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include -I/usr/include/sym -I/home/ali/miniconda3/include/python3.12 -isystem /usr/local/include/gtsam/3rdparty/SuiteSparse_config -isystem /usr/local/include/gtsam/3rdparty/CCOLAMD -isystem /usr/local/include/gtsam/3rdparty/metis -isystem /usr/local/include/gtsam/3rdparty/Eigen 
+CXX_INCLUDES = -I/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include -I/usr/include/sym -I/home/ali/miniconda3/include/python3.12 -isystem /usr/local/include/gtsam/3rdparty/SuiteSparse_config -isystem /usr/local/include/gtsam/3rdparty/CCOLAMD -isystem /usr/local/include/gtsam/3rdparty/metis -isystem /usr/local/include/gtsam/3rdparty/Eigen 
 

@@ -24,7 +24,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include"
+  "/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include"
   "/usr/include/sym"
   "/home/ali/miniconda3/include/python3.12"
   "/usr/local/include/gtsam/3rdparty/SuiteSparse_config"

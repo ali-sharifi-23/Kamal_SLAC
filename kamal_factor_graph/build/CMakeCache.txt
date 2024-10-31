@@ -260,7 +260,7 @@ _Python3_INCLUDE_DIR:PATH=/home/ali/miniconda3/include/python3.12
 _Python3_LIBRARY_RELEASE:FILEPATH=/home/ali/miniconda3/lib/libpython3.12.so
 
 //Path to a file.
-_Python3_NumPy_INCLUDE_DIR:PATH=/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include
+_Python3_NumPy_INCLUDE_DIR:PATH=/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include
 
 //The directory containing a CMake configuration file for boost_atomic.
 boost_atomic_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.71.0
@@ -459,7 +459,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake][cfound components: serialization system filesystem thread program_options date_time timer chrono regex ][v1.71.0(1.65)]
 //Details about finding Python3
-FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/ali/miniconda3/lib/libpython3.12.so][/home/ali/miniconda3/include/python3.12][/home/ali/miniconda3/lib/python3.12/site-packages/numpy/_core/include][cfound components: Development NumPy Interpreter ][v3.12.2()]
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/ali/miniconda3/lib/libpython3.12.so][/home/ali/miniconda3/include/python3.12][/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include][cfound components: Development NumPy Interpreter ][v3.12.2()]
 //ADVANCED property for variable: Python3_LIBRARY_DEBUG
 Python3_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Python3_LIBRARY_RELEASE

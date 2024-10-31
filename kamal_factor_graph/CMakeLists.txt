@@ -20,9 +20,9 @@ target_link_libraries(
     PRIVATE gtsam    # Link GTSAM
     PRIVATE ${Python3_LIBRARIES}  # Link Python libraries
     PRIVATE ${Python3_NumPy_LIBRARIES}  # Link NumPy libraries
-    #/usr/lib/libsymforce_gen.so
-    #/usr/lib/libsymforce_opt.so
-    #/usr/lib/libsymforce_slam.so
-    #/usr/lib/libsymforce_cholesky.so
+    /usr/lib/libsymforce_gen.so
+    /usr/lib/libsymforce_opt.so
+    /usr/lib/libsymforce_slam.so
+    /usr/lib/libsymforce_cholesky.so
 )
 
