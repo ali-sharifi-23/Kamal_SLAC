@@ -16,7 +16,5 @@ The C++ code for the factor graph of the proposed problem is implemented in this
         `<arg1>`: The value of the standard deviation of the cable length offsets.
         `<arg2>`: The number of position samples to include in the optimization.
         Replace `<arg1>` and `<arg2>` with appropriate values.
-<br>
 - `verification/init.ipynb`: This notebook perturbs the initial estimates of the anchor point locations and runs the compiled executable from the `build` directory to perform the optimization. It then receives and plots the optimization results in a figure for visualization.
-<br>
 - `verification/calib.ipynb`: This notebook is designed to compare the optimization results with the ground truth values to verify the calibration process.
