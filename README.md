@@ -7,7 +7,7 @@
 [![Symforce](https://img.shields.io/badge/Library-Symforce-yellow.svg)](https://symforce.org/)
 
 ## Overview
-This repository contains the code and supplementary material for the paper: "*Graph-Based Simultaneous Localization and Calibration of Planar Cable-Driven Parallel Robots*". The paper addresses issue of deployability of planar **C**able-**D**riven **P**arallel **R**obots (**CDPR**s) by fusing state estimates with joint measurements, resulting in a unified framework for both calibration and localization. This is achieved through a factor-graph formulation that integrates these processes. The proposed method has been implemented on Kamal-ol-Molk planar CDPR, developed by [ARAS](https://aras.kntu.ac.ir/) Robotic group at [K.N. Toosi University](https://kntu.ac.ir/).
+This repository contains the code for the paper: "*Graph-Based Simultaneous Localization and Calibration of Planar Cable-Driven Parallel Robots*". The paper addresses issue of deployability of planar **C**able-**D**riven **P**arallel **R**obots (**CDPR**s) by fusing state estimates with joint measurements, resulting in a unified framework for both calibration and localization. This is achieved through a factor-graph formulation that integrates these processes. The proposed method has been implemented on Kamal-ol-Molk planar CDPR, developed by [ARAS](https://aras.kntu.ac.ir/) Robotic group at [K.N. Toosi University](https://kntu.ac.ir/).
 
 <div align="center">
     <img src="Kamal Structure.jpg" width="500"/>
