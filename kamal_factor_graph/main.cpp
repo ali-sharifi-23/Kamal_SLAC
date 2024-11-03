@@ -64,8 +64,6 @@ int main(int argc, char* argv[]) {
 
     auto OdometryNoise = noiseModel::Isotropic::Sigma(3, 0.05);
     auto KinematicNoise = noiseModel::Isotropic::Sigma(3, 0.005);
-
-    auto AnchorPrior = gtsam::noiseModel::Isotropic::Sigma(3, 0.05);
     auto CablePrior = gtsam::noiseModel::Isotropic::Sigma(1, sigma);
 
     int nPose = numPose;

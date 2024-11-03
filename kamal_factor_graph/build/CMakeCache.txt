@@ -168,7 +168,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=MyGTSAM
+CMAKE_PROJECT_NAME:STATIC=KamalSLAC
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -239,28 +239,28 @@ GTSAM_DIR:PATH=/usr/local/lib/cmake/GTSAM
 GTSAM_INCLUDE_DIR:PATH=/usr/local/lib/cmake/GTSAM/../../../include
 
 //Value Computed by CMake
-MyGTSAM_BINARY_DIR:STATIC=/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build
+KamalSLAC_BINARY_DIR:STATIC=/home/ali/Github/Kamal_Calibration/kamal_factor_graph/build
 
 //Value Computed by CMake
-MyGTSAM_SOURCE_DIR:STATIC=/home/ali/Github/Kamal_Calibration/kamal_factor_graph
+KamalSLAC_SOURCE_DIR:STATIC=/home/ali/Github/Kamal_Calibration/kamal_factor_graph
 
 //Path to a library.
 Python3_LIBRARY_DEBUG:FILEPATH=
 
 //Path to a library.
-Python3_LIBRARY_RELEASE:FILEPATH=/home/ali/miniconda3/lib/libpython3.12.so
+Python3_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libpython3.8.so
 
 //Path to a program.
-_Python3_EXECUTABLE:FILEPATH=/home/ali/miniconda3/bin/python3.1
+_Python3_EXECUTABLE:FILEPATH=/usr/bin/python3.8
 
 //Path to a file.
-_Python3_INCLUDE_DIR:PATH=/home/ali/miniconda3/include/python3.12
+_Python3_INCLUDE_DIR:PATH=/usr/include/python3.8
 
 //Path to a library.
-_Python3_LIBRARY_RELEASE:FILEPATH=/home/ali/miniconda3/lib/libpython3.12.so
+_Python3_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libpython3.8.so
 
 //Path to a file.
-_Python3_NumPy_INCLUDE_DIR:PATH=/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include
+_Python3_NumPy_INCLUDE_DIR:PATH=/home/ali/.local/lib/python3.8/site-packages/numpy/core/include
 
 //The directory containing a CMake configuration file for boost_atomic.
 boost_atomic_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.71.0
@@ -294,9 +294,6 @@ boost_thread_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_thread-1.71.0
 
 //The directory containing a CMake configuration file for boost_timer.
 boost_timer_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/boost_timer-1.71.0
-
-//The directory containing a CMake configuration file for symforce.
-symforce_DIR:PATH=symforce_DIR-NOTFOUND
 
 
 ########################
@@ -459,24 +456,24 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake][cfound components: serialization system filesystem thread program_options date_time timer chrono regex ][v1.71.0(1.65)]
 //Details about finding Python3
-FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/home/ali/miniconda3/lib/libpython3.12.so][/home/ali/miniconda3/include/python3.12][/home/ali/miniconda3/lib/python3.12/site-packages/numpy/core/include][cfound components: Development NumPy Interpreter ][v3.12.2()]
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[/usr/lib/x86_64-linux-gnu/libpython3.8.so][/usr/include/python3.8][/home/ali/.local/lib/python3.8/site-packages/numpy/core/include][cfound components: Development NumPy Interpreter ][v3.8.10()]
 //ADVANCED property for variable: Python3_LIBRARY_DEBUG
 Python3_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Python3_LIBRARY_RELEASE
 Python3_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: _Python3_DEVELOPMENT_SIGNATURE
 _Python3_DEVELOPMENT_SIGNATURE-ADVANCED:INTERNAL=1
-_Python3_DEVELOPMENT_SIGNATURE:INTERNAL=209b6973e821cafe4f5f6bbd437b057e
+_Python3_DEVELOPMENT_SIGNATURE:INTERNAL=4a4167209e8a167eff1f1b37da22ba0f
 //ADVANCED property for variable: _Python3_EXECUTABLE
 _Python3_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: _Python3_INCLUDE_DIR
 _Python3_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: _Python3_INTERPRETER_SIGNATURE
 _Python3_INTERPRETER_SIGNATURE-ADVANCED:INTERNAL=1
-_Python3_INTERPRETER_SIGNATURE:INTERNAL=bef1214a5bc66be6fe3b39a46acb5784
+_Python3_INTERPRETER_SIGNATURE:INTERNAL=60fbcba4d3ec42cb22d9b25de2c7c03a
 //ADVANCED property for variable: _Python3_LIBRARY_RELEASE
 _Python3_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
-_Python3_NUMPY_SIGNATURE:INTERNAL=cd2d9cc23e13e44ba4fd8c745b2843fb
+_Python3_NUMPY_SIGNATURE:INTERNAL=d4c2085e6160485e886b3c0985f5bfe4
 //ADVANCED property for variable: _Python3_NumPy_INCLUDE_DIR
 _Python3_NumPy_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_atomic_DIR

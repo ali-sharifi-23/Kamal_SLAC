@@ -1,0 +1,2 @@
+# Model Generation
+The `system_model/function_generator.ipynb` notebook is used to generate the cost functions and their derivatives with respect to variables in C++ header files. This is accomplished using the `symforce` library. The generated header files are saved in the `system_model/cpp` directory.
